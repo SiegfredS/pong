@@ -1,11 +1,13 @@
 from turtle import Turtle
 
+ALIGN = "CENTER"
+FONT = ("Courier", 72, "bold")
 
 class Player:
     def __init__(self,
                  right=1,
                  move_distance=20,
-                 speed=5,
+                 speed=20,
                  length=7):
         super().__init__()
         self.move_distance = move_distance
@@ -18,6 +20,13 @@ class Player:
         self.head.setheading(90)
         self.tail = self.segments[-1]
         self.tail.setheading(270)
+        self.score = 0
+        self.writer_init_x = 100*right
+        self.writer = Turtle()
+        self.writer.penup()
+        self.writer.hideturtle()
+        self.writer.color("white")
+        self.writer.goto(x=self.writer_init_x, y=200)
 
     def initialize_segments(self):
         y_head = 10*self.length
@@ -34,12 +43,25 @@ class Player:
 
     def move_up(self):
         # Always start with tail to head yung movement
-        for i in range(self.length-1, 0, -1):
-            self.segments[i].goto(self.segments[i-1].position())
-        # head forwards last
-        self.head.forward(self.move_distance)
+        if self.head.ycor() < 290:
+            for i in range(self.length-1, 0, -1):
+                self.segments[i].goto(self.segments[i-1].position())
+            # head forwards last
+            self.head.forward(self.move_distance)
+        else:
+            pass
 
     def move_down(self):
-        for i in range(0, self.length-1):
-            self.segments[i].goto(self.segments[i+1].position())
-        self.tail.forward(self.move_distance)
+        if self.tail.ycor() > -290:
+            for i in range(0, self.length-1):
+                self.segments[i].goto(self.segments[i+1].position())
+            self.tail.forward(self.move_distance)
+        else:
+            pass
+
+    def add_score(self):
+        self.score += 1
+
+    def write_score(self):
+        self.writer.clear()
+        self.writer.write(self.score, align=ALIGN, font=FONT)
