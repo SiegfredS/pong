@@ -21,5 +21,10 @@ is_playing = True
 while is_playing:
     time.sleep(0.01)
     my_screen.update()
+    ball.move()
+    ball.is_out_vertical()
+    ball.is_out_horizontal()
+    ball.contact(player1=left_player, player2=right_player)
+
 
 my_screen.exitonclick()

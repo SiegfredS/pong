@@ -6,7 +6,7 @@ class Player:
                  right=1,
                  move_distance=20,
                  speed=5,
-                 length=5):
+                 length=7):
         super().__init__()
         self.move_distance = move_distance
         self.speed = speed
